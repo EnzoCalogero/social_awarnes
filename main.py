@@ -15,30 +15,33 @@ questions_list = list(df["Question"].unique())
 ###############
 
 app.layout = html.Div(children=[
-    html.H1(children='Reason Why they thinks is OK to Beat your Wife'),
+    html.Div(children=[
+    html.H1(children='Are Woman Created Equal?'),
+    html.H3(children='Are Man and Woman aware of it?'),
+
     dcc.Dropdown(
         options=questions_list,
         value='... for at least one specific reason',
         id='questions_list'
-    ),
-    html.Div(children='''
-        What the Female Thinks.'''),
+    )], style={'width': '30%'}),
+    html.Div(children=[
+         html.Div(children=''' What the Female Thinks.'''),
+            dcc.Graph(
+            id='Female_Questions',
+        ) ,
+        html.Div(children='''
+            What the Male Thinks.'''),
+        dcc.Graph(
+            id='Male_Questions',
+        ),
+        html.Div(children='''
+        What is the Delta.'''),
+        dcc.Graph(
+            id='Delta_Questions',
+        ),
 
-    dcc.Graph(
-        id='Female_Questions',
-    ),
-    html.Div(children='''
-        What the Male Thinks.'''),
-    dcc.Graph(
-        id='Male_Questions',
-    ),
-    html.Div(children='''
-    What is the Delta.'''),
-    dcc.Graph(
-        id='Delta_Questions',
-    ),
-
-])
+    ], style={'width': '49%'}),
+    ])
 
 ###################
 ## Call Backs  ###
@@ -105,4 +108,6 @@ def update_figure(value):
     return fig
 
 if __name__ == '__main__':
-    app.run_server(port= 8050, host="0.0.0.0", debug=True)
+#docker    app.run_server(port= 8050, host="0.0.0.0")
+    app.run_server(port=8050, debug=True)
+
