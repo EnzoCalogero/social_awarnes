@@ -1,0 +1,3 @@
+
+docker run -d -p 8050:8050 tiny_home
+docker run -d -p 8050:8050 tiny_home

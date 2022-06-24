@@ -1,0 +1,4 @@
+dash==2.5.1
+pandas==1.4.2
+pycountry_convert==0.7.2
+
