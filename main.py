@@ -16,31 +16,28 @@ questions_list = list(df["Question"].unique())
 
 app.layout = html.Div(children=[
     html.Div(children=[
-    html.H1(children='Are Woman Created Equal?'),
-    html.H3(children='Are Man and Woman aware of it?'),
+        html.H1(children='Are Woman Created Equal?'),
+        html.H3(children='Are Man and Woman aware of it?'),
+        dcc.Dropdown(
+            options=questions_list,
+            value='... for at least one specific reason',
+            id='questions_list')
+        ], style={'width': '30%'}),
 
-    dcc.Dropdown(
-        options=questions_list,
-        value='... for at least one specific reason',
-        id='questions_list'
-    )], style={'width': '30%'}),
     html.Div(children=[
-         html.Div(children=''' What the Female Thinks.'''),
-            dcc.Graph(
-            id='Female_Questions',
-        ) ,
-        html.Div(children='''
-            What the Male Thinks.'''),
-        dcc.Graph(
-            id='Male_Questions',
-        ),
-        html.Div(children='''
-        What is the Delta.'''),
-        dcc.Graph(
-            id='Delta_Questions',
-        ),
+         #html.Div(children=''' What the Female Thinks.'''),
+         dcc.Graph(id='Female_Questions'),
+         ], style={'width': '49%', 'display': 'inline-block'}),
 
-    ], style={'width': '49%'}),
+    html.Div(children=[
+        #html.Div(children='''  What the Male Thinks.'''),
+        dcc.Graph(id='Male_Questions'),
+        ], style={'width': '49%', 'display': 'inline-block'}),
+
+    html.Div(children=[
+        html.Div(children='''  What is the Delta.'''),
+        dcc.Graph(id='Delta_Questions'),
+    ], style={'width': '49%', 'display': 'inline-block'}),
     ])
 
 ###################
@@ -59,7 +56,7 @@ def update_figure(value):
                  color_discrete_sequence=['#ff97ff'],
                  color="Gender")
     fig.update_layout(xaxis={'categoryorder': 'total descending'})
-    fig.update_layout(showlegend=False)
+    fig.update_layout(showlegend=False, title="What the Female Thinks.")
     return fig
 
 @app.callback(
@@ -74,7 +71,7 @@ def update_figure(value):
                  x="Country",
                  color_discrete_sequence=['#19d3f3'],
                  color="Gender")
-    fig.update_layout(showlegend=False)
+    fig.update_layout(showlegend=False, title="What the Male Thinks.")
 
     fig.update_layout(xaxis={'categoryorder': 'total descending'})
     return fig
@@ -103,11 +100,11 @@ def update_figure(value):
                  x="Country",
                  color_discrete_sequence=['#bab0ac'],
                  color="Gender")
-    fig.update_layout(xaxis={'categoryorder': 'total descending' })
-    fig.update_layout(showlegend=False)
+    fig.update_layout(xaxis={'categoryorder': 'total descending'})
+    fig.update_layout(showlegend=False, title="What the Female Thinks.")
     return fig
 
-if __name__ == '__main__':
-#docker    app.run_server(port= 8050, host="0.0.0.0")
-    app.run_server(port=8050, debug=True)
 
+if __name__ == '__main__':
+    # app.run_server(port= 8050, host="0.0.0.0") # docker
+    app.run_server(port=8050, debug=True)  # interactive
