@@ -1,11 +1,17 @@
+
 from dash import Dash, html, dcc, Input, Output
 import plotly.express as px
 import pandas as pd
 import numpy as np
-app = Dash(__name__)
+
+from app import app
+
+from apps import home
 
 #df = pd.read_csv("data/violence_data.csv")
 df = pd.read_csv("C:/gits_folders/social_awarnes/data/violence_data.csv")
+print(df.head())
+
 # List questions
 questions_list = list(df["Question"].unique())
 demographic_questions_list = list(df["Demographics Question"].unique())
@@ -15,8 +21,7 @@ demographic_response_list = list(df["Demographics Response"].unique())
 ###############
 ##  Layout  ###
 ###############
-
-app.layout = html.Div(children=[
+layout = html.Div(children=[
     html.Div(children=[
         html.H1(children='Are Woman Created Equal?'),
         html.H3(children='Are Man and Woman aware of it?'),
@@ -37,7 +42,7 @@ app.layout = html.Div(children=[
             id='demographic_questions_list'),
         dcc.Dropdown(
             id='demographic_answer_list'),
-    ], style={'width': "40%", 'float': 'top', 'display': 'inline-block',
+    ], style={'width': "70%", 'float': 'top', 'display': 'inline-block',
               'boxShadow': '0px 0px 5px 5px rgba(37,52,113,0.4)'}),
 
     html.Div(children=[
@@ -47,20 +52,19 @@ app.layout = html.Div(children=[
                    'padding': '0px 10px 15px 10px',
                    'marginLeft': 'auto',
                    'marginRight': 'auto',
-                   'width': "80vh",
+                   'width': "75vh",
                    'display': 'inline-block',
                    'boxShadow': '0px 0px 5px 5px rgba(37,52,113,0.4)'
                     }
     ),
 
     html.Div(children=[
-        #html.Div(children='''  What the Male Thinks.'''),
-        dcc.Graph(id='Male_Questions'),
+         dcc.Graph(id='Male_Questions'),
         ], style={#'width': '40%',
                   'padding': '0px 10px 15px 10px',
                   'marginLeft': 'auto',
                   'marginRight': 'auto',
-                  'width': "80vh",
+                  'width': "75vh",
                   'display': 'inline-block',
                   'boxShadow': '0px 0px 5px 5px rgba(37,52,113,0.4)'
                   }
@@ -72,28 +76,28 @@ app.layout = html.Div(children=[
           'padding': '0px 10px 15px 10px',
           'marginLeft': 'auto',
           'marginRight': 'auto',
-          'width': "80vh",
+          'width': "75vh",
           'boxShadow': '0px 0px 5px 5px rgba(37,52,113,0.4)',
-
-
           'display': 'inline-block',
             }),
-
-
-    ])
+    ], style={'font-family': 'Glacial Indifference', 'padding': '0px 10px 15px 10px',
+          'marginLeft': 'auto', 'marginRight': 'auto', "width": "160vh",
+          'boxShadow': '0px 0px 5px 5px rgba(37, 52, 113, 0.4)'})
 
 ###################
 ## Call Backs  ###
 ##################
 
+
 @app.callback(
     Output('demographic_answer_list', 'options'),
     Output('demographic_answer_list', 'value'),
-    Input('demographic_questions_list', 'value'))
+    Input("demographic_questions_list", 'value'))
 def set_response(value):
     temp = df[df["Demographics Question"] == value]
     options = list(temp["Demographics Response"].unique())
     return options, options[0]
+
 
 @app.callback(
     Output('Female_Questions', 'figure'),
