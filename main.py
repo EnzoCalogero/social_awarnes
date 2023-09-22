@@ -2,7 +2,7 @@ from dash import Dash, html, dcc, Input, Output
 import plotly.express as px
 import pandas as pd
 import numpy as np
-app = Dash(__name__)
+app = Dash()
 
 #df = pd.read_csv("data/violence_data.csv")
 df = pd.read_csv("C:/gits_folders/social_awarnes/data/violence_data.csv")
@@ -19,8 +19,10 @@ demographic_response_list = list(df["Demographics Response"].unique())
 app.layout = html.Div(children=[
     html.Div(children=[
         html.H1(children='Are Woman Created Equal?'),
-        html.H3(children='Are Man and Woman aware of it?'),
-        ], style={'width': '20%',
+        html.H3(children='The data is collected from 70 countries'),
+        html.H3(children="and contains the question when violence is ok agaist a woman/girl")
+
+        ], style={'width': '50%',
                   'padding': '0px 10px 15px 10px',
                    'marginLeft': 'auto',
                    'marginRight': 'auto',
@@ -37,7 +39,7 @@ app.layout = html.Div(children=[
             id='demographic_questions_list'),
         dcc.Dropdown(
             id='demographic_answer_list'),
-    ], style={'width': "40%", 'float': 'top', 'display': 'inline-block',
+    ], style={'width': "30%", 'float': 'top', 'display': 'inline-block',
               'boxShadow': '0px 0px 5px 5px rgba(37,52,113,0.4)'}),
 
     html.Div(children=[

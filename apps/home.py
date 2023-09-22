@@ -43,8 +43,7 @@ layout = html.Div([
         html.P(dcc.Link('Go to Revealed Password Analytics (ELK)', href='/revealed')),
         html.P(dcc.Link('Go to Long Running Sessions Analytics (ELK)', href='/longrun')),
         #html.P(dcc.Link('Go to User Behavior Analytics', href='/uba')),
-        html.P(html.A("Go to Graphs Charts", href='/graphcharts', target="_blank")),
-        html.A("Neo4j Console", href='http://localhost:7474/browser/', target="_blank"),
+
     ]),
 ], style={
     'font-family': 'Glacial Indifference',
