@@ -4,13 +4,11 @@ import pandas as pd
 import numpy as np
 app = Dash()
 
-#df = pd.read_csv("data/violence_data.csv")
 df = pd.read_csv("C:/gits_folders/social_awarnes/data/violence_data.csv")
 # List questions
 questions_list = list(df["Question"].unique())
 demographic_questions_list = list(df["Demographics Question"].unique())
 demographic_response_list = list(df["Demographics Response"].unique())
-# /List questions
 
 ###############
 ##  Layout  ###
@@ -43,7 +41,6 @@ app.layout = html.Div(children=[
               'boxShadow': '0px 0px 5px 5px rgba(37,52,113,0.4)'}),
 
     html.Div(children=[
-         #html.Div(children=''' What the Female Thinks.'''),
          dcc.Graph(id='Female_Questions'),
          ], style={#'width': '40%',
                    'padding': '0px 10px 15px 10px',
@@ -56,7 +53,6 @@ app.layout = html.Div(children=[
     ),
 
     html.Div(children=[
-        #html.Div(children='''  What the Male Thinks.'''),
         dcc.Graph(id='Male_Questions'),
         ], style={#'width': '40%',
                   'padding': '0px 10px 15px 10px',
@@ -80,8 +76,6 @@ app.layout = html.Div(children=[
 
           'display': 'inline-block',
             }),
-
-
     ])
 
 ###################

@@ -4,7 +4,7 @@ from dash import Dash, html, dcc, Input, Output
 import pandas as pd
 from app import app
 #app = Dash(__name__)
-from apps import home, overview
+from apps import home, Full_Details
 
 # Dash Variables
 colors = {
@@ -35,8 +35,8 @@ app.layout= html.Div([
 def display_page(pathname):
     if pathname == '/':
         return home.layout
-    elif pathname == '/summary':
-        return overview.layout
+    elif pathname == '/Full_Details':
+        return Full_Details.layout
     else:
         return '404'
 

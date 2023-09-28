@@ -23,7 +23,7 @@ demographic_response_list = list(df["Demographics Response"].unique())
 ###############
 layout = html.Div(children=[
     html.Div(children=[
-        html.H1(children='Are Woman Created Equal?'),
+        html.H1(children='How Violence on Woman is Tolerate?'),
         html.H3(children='Are Man and Woman aware of it?'),
         ], style={'width': '20%',
                   'padding': '0px 10px 15px 10px',
