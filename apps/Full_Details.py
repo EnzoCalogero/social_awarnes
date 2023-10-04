@@ -6,16 +6,13 @@ import numpy as np
 
 from app import app
 
-from apps import home
 
-#df = pd.read_csv("data/violence_data.csv")
-df = pd.read_csv("C:/gits_folders/social_awarnes/data/violence_data.csv")
-print(df.head())
+df_ = pd.read_csv("C:/gits_folders/social_awarnes/data/violence_data.csv")
 
 # List questions
-questions_list = list(df["Question"].unique())
-demographic_questions_list = list(df["Demographics Question"].unique())
-demographic_response_list = list(df["Demographics Response"].unique())
+questions_list = list(df_["Question"].unique())
+demographic_questions_list = list(df_["Demographics Question"].unique())
+demographic_response_list = list(df_["Demographics Response"].unique())
 # /List questions
 
 ###############
@@ -94,7 +91,7 @@ layout = html.Div(children=[
     Output('demographic_answer_list', 'value'),
     Input("demographic_questions_list", 'value'))
 def set_response(value):
-    temp = df[df["Demographics Question"] == value]
+    temp = df_[df_["Demographics Question"] == value]
     options = list(temp["Demographics Response"].unique())
     return options, options[0]
 
@@ -104,7 +101,7 @@ def set_response(value):
     Input('demographic_answer_list', 'value'),
     Input('questions_list', 'value'))
 def update_figure(demographic_value, question_value):
-    filtered_df = df[df["Question"] == question_value].copy()
+    filtered_df = df_[df_["Question"] == question_value].copy()
     filtered_df = filtered_df[filtered_df["Demographics Response"] == demographic_value].copy()
     filtered_df = filtered_df[filtered_df["Gender"] == "F"].copy()
     fig = px.bar(filtered_df,
@@ -121,7 +118,7 @@ def update_figure(demographic_value, question_value):
     Input('demographic_answer_list', 'value'),
     Input('questions_list', 'value'))
 def update_figure(demographic_value, question_value):
-    filtered_df = df[df["Question"] == question_value].copy()
+    filtered_df = df_[df_["Question"] == question_value].copy()
     filtered_df = filtered_df[filtered_df["Demographics Response"] == demographic_value].copy()
     filtered_df = filtered_df[filtered_df["Gender"] == "M"].copy()
 
@@ -141,7 +138,7 @@ def update_figure(demographic_value, question_value):
     Input('demographic_answer_list', 'value'),
     Input('questions_list', 'value'))
 def update_figure(demographic_value, question_value):
-    filtered_df = df[df["Question"] == question_value].copy()
+    filtered_df = df_[df_["Question"] == question_value].copy()
     filtered_df = filtered_df[filtered_df["Demographics Response"] == demographic_value].copy()
     M = filtered_df[filtered_df["Gender"] == "M"].copy()
     M = M[["Country", "Value"]]
@@ -166,7 +163,6 @@ def update_figure(demographic_value, question_value):
     fig.update_layout(xaxis={'categoryorder': 'total descending'})
     fig.update_layout(showlegend=False, title="What the Male vs Female Thinks. (Male % - Female%)")
     fig.update_traces(marker_color=MF["Color"])
-
     return fig
 
 

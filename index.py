@@ -1,22 +1,18 @@
 # -*- coding: utf-8 -*-
-
 from dash import Dash, html, dcc, Input, Output
-import pandas as pd
 from app import app
-#app = Dash(__name__)
-from apps import home, Full_Details
+from apps import home, Full_Details, First_Overview, overview
 
 # Dash Variables
 colors = {
     'background': '#111111',
     'text': '#253471'
 }
-#df = pd.read_csv("C:/gits_folders/social_awarnes/data/violence_data.csv")
 
 #############################################
-###   Starting the Layout                ####
+###  Starting the Layout                 ####
 ##############################################
-app.layout= html.Div([
+app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
     html.Div(id='page-content'),
     html.Div(id='my-div'),
@@ -37,10 +33,14 @@ def display_page(pathname):
         return home.layout
     elif pathname == '/Full_Details':
         return Full_Details.layout
+    elif pathname == '/First_Overview':
+        return First_Overview.layout
+    elif pathname == '/First':
+        return overview.layout
     else:
         return '404'
 
 
 if __name__ == '__main__':
-    app.run_server(port=8050, debug=True)
+     app.run_server(port=8061, debug=True)
 

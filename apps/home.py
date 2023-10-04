@@ -28,6 +28,9 @@ layout = html.Div([
     ], className="row"),
     html.Div([
         html.P(dcc.Link('Full Details', href='/Full_Details'), ),
+        html.P(dcc.Link('First Overview', href='/First_Overview'), ),
+html.P(dcc.Link('First', href='/First'), ),
+
         #html.Iframe(src='/sparkline', height="450", width="35%", style={'border': '3', 'float': 'right'}),
         #html.P(dcc.Link('Go to Channels Analytics', href='/channel_heatmap')),
 
