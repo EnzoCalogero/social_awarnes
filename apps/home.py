@@ -27,15 +27,13 @@ layout = html.Div([
         html.P(id='intermediate-value_home', style={'float': 'right'}),
     ], className="row"),
     html.Div([
-        html.P(dcc.Link('Full Details', href='/Full_Details'), ),
-        html.P(dcc.Link('First Overview', href='/First_Overview'), ),
-html.P(dcc.Link('First', href='/First'), ),
-
+        html.P(dcc.Link('Full Details', href='/Full_Details')),
+        html.P(dcc.Link('First Overview', href='/First_Overview')),
+        html.P(dcc.Link('First', href='/First')),
+        html.P(dcc.Link('Second', href='/Second')),
         #html.Iframe(src='/sparkline', height="450", width="35%", style={'border': '3', 'float': 'right'}),
         #html.P(dcc.Link('Go to Channels Analytics', href='/channel_heatmap')),
-
-    ]),
-], style={
+    ])], style={
     'font-family': 'Glacial Indifference',
     'padding': '0px 10px 15px 10px',
     'marginLeft': 'auto',

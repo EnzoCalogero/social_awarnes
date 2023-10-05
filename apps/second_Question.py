@@ -6,9 +6,9 @@ import numpy as np
 
 from app import app
 
-df = pd.read_csv("C:/gits_folders/social_awarnes/data/violence_data.csv")
-df_1 = df[df["Question"] == "... for at least one specific reason"].copy()
-df_1 = df_1.sort_values(by=['Value'], ascending=False)
+df2 = pd.read_csv("C:/gits_folders/social_awarnes/data/violence_data.csv")
+df2=df2[df2.Question !="... for at least one specific reason"]
+df2 = df2.sort_values(by=['Value'], ascending=False)
 
 # List questions
 layout = html.Div([
@@ -28,7 +28,7 @@ layout = html.Div([
         value='total_bill',
         inline=True
     ),
-    dcc.Graph(id="graph")], style={#'width': '40%',
+    dcc.Graph(id="graph_question")], style={
                   'padding': '0px 10px 15px 10px',
                   'marginLeft': 'auto',
                   'marginRight': 'auto',
@@ -39,19 +39,19 @@ layout = html.Div([
 
 
 @app.callback(
-    Output("graph", "figure"),
+    Output("graph_question", "figure"),
     Input("x-axis", "value"),
     Input("y-axis", "value"))
-def generate_chart(x, y):
-    fig = px.box(df_1,
-                 x="Country",
+def generate_question(x, y):
+    fig = px.box(df2,
+                 x="Question",
                  y="Value",
                  color="Gender",
                  color_discrete_sequence=["pink", "blue"],
                  )
     fig.update_layout(
         title={
-            'text': "For Each Country Man vs Woman Expectation",
+            'text': "For Each Question Man vs Woman Expectation",
             'y': 0.9,
             'x': 0.5,
             'xanchor': 'center',

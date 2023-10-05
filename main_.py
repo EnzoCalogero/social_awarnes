@@ -29,7 +29,7 @@ app.layout = html.Div(children=[
     html.Div(children=[
         dcc.Dropdown(
             options=questions_list,
-            value='... for at least one specific reason',
+            value='',
             id='questions_list'),
         dcc.Dropdown(
             options=demographic_questions_list,
@@ -42,7 +42,7 @@ app.layout = html.Div(children=[
 
     html.Div(children=[
          dcc.Graph(id='Female_Questions'),
-         ], style={#'width': '40%',
+         ], style={
                    'padding': '0px 10px 15px 10px',
                    'marginLeft': 'auto',
                    'marginRight': 'auto',
