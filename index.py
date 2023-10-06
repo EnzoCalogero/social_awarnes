@@ -30,17 +30,19 @@ app.layout = html.Div([
               [Input('url', 'pathname')])
 def display_page(pathname):
     if pathname == '/':
-        return home.layout
-    elif pathname == '/Full_Details':
-        return Full_Details.layout
-    elif pathname == '/First_Overview':
-        return First_Overview.layout
-    elif pathname == '/First':
         return overview.layout
+    elif pathname == '/overview':
+        return overview.layout
+    elif pathname == '/First':
+        return First_Overview.layout
     elif pathname == '/Second':
         return second_Question.layout
+    elif pathname == '/Full_Details':
+        return Full_Details.layout
+    elif pathname == '/index':
+        return home.layout
     else:
-        return '404'
+        return home.layout
 
 
 if __name__ == '__main__':

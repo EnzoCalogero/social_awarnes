@@ -13,7 +13,6 @@ df_1 = df_1.sort_values(by=['Value'], ascending=False)
 # List questions
 layout = html.Div([
     html.H4("Analysis of the restaurant's revenue"),
-
     html.P("y-axis:"),
     dcc.Checklist(
         id='x-axis',
@@ -28,9 +27,11 @@ layout = html.Div([
         value='total_bill',
         inline=True
     ),
-    dcc.Graph(id="graph")], style={#'width': '40%',
+    dcc.Graph(id="graph"),
+    html.P(dcc.Link('Next Page', href='/Second')),
+    html.P(dcc.Link('Back Page', href='/'))], style={#'width': '40%',
                   'padding': '0px 10px 15px 10px',
-                  'marginLeft': 'auto',
+                  'marginL,eft': 'auto',
                   'marginRight': 'auto',
                   'width': "150vh",
                   'display': 'inline-block',

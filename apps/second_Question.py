@@ -7,7 +7,7 @@ import numpy as np
 from app import app
 
 df2 = pd.read_csv("C:/gits_folders/social_awarnes/data/violence_data.csv")
-df2=df2[df2.Question !="... for at least one specific reason"]
+df2 = df2[df2.Question !="... for at least one specific reason"]
 df2 = df2.sort_values(by=['Value'], ascending=False)
 
 # List questions
