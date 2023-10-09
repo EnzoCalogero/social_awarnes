@@ -30,6 +30,8 @@ layout = html.Div([
         html.P(dcc.Link('Overview', href='/')),
         html.P(dcc.Link('First', href='/First')),
         html.P(dcc.Link('Second', href='/Second')),
+        html.P(dcc.Link('Third', href='/Third')),
+
         html.P(dcc.Link('Appendix_Full Details', href='/Full_Details')),
         html.P(dcc.Link('Index Pages', href='/index')),
 

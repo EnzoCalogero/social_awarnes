@@ -4,14 +4,15 @@ import plotly.express as px
 import pandas as pd
 import numpy as np
 
-app = Dash(__name__)
+from app import app
+# app = Dash(__name__)
 dataset = pd.read_csv("C:/gits_folders/social_awarnes/data/violence_data.csv")
 Education = dataset[dataset["Demographics Question"] == "Education"]
 Education = Education.groupby(['Demographics Response','Gender'])["Value"].agg(["median", "max", "min", "mean"]).reset_index()
 
 Education = Education.sort_values(by=['median'], ascending=False)
 
-app.layout = html.Div([
+layout = html.Div([
         html.H4("Graphing Light/Dark Mode with BooleanSwitch"),
         html.P("light | dark", style={"textAlign": "center"}),
         dcc.Checklist(

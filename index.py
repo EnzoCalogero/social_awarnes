@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from dash import Dash, html, dcc, Input, Output
 from app import app
-from apps import home, Full_Details, First_Overview, overview, second_Question
+from apps import home, Full_Details, First_Overview, overview, second_Question, third_whithin_questions
 
 # Dash Variables
 colors = {
@@ -37,6 +37,8 @@ def display_page(pathname):
         return First_Overview.layout
     elif pathname == '/Second':
         return second_Question.layout
+    elif pathname == '/Third':
+        return third_whithin_questions.layout
     elif pathname == '/Full_Details':
         return Full_Details.layout
     elif pathname == '/index':
