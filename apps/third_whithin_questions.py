@@ -1,34 +1,78 @@
-from dash import Dash, html, dcc, Input, Output
+from dash import html, dcc, Input, Output
+import dash_bootstrap_components as dbc
 
 import plotly.express as px
 import pandas as pd
-import numpy as np
 
 from app import app
-# app = Dash(__name__)
-dataset = pd.read_csv("C:/gits_folders/social_awarnes/data/violence_data.csv")
-Education = dataset[dataset["Demographics Question"] == "Education"]
-Education = Education.groupby(['Demographics Response','Gender'])["Value"].agg(["median", "max", "min", "mean"]).reset_index()
 
+dataset = pd.read_csv("C:/gits_folders/social_awarnes/data/violence_data.csv")
+
+Education = dataset[dataset["Demographics Question"] == "Education"]
+Education = Education.groupby(['Demographics Response', 'Gender'])["Value"]\
+                                            .agg(["median", "max", "min", "mean"]).reset_index()
 Education = Education.sort_values(by=['median'], ascending=False)
 
+Marital_status = dataset[dataset["Demographics Question"] == "Marital status"]
+Marital_status = Marital_status.groupby(['Demographics Response', 'Gender'])["Value"]\
+                                            .agg(["median", "max", "min", "mean"]).reset_index()
+Marital_status = Marital_status.sort_values(by=['median'], ascending=False)
+
+Age = dataset[dataset["Demographics Question"] == "Age"]
+Age = Age.groupby(['Demographics Response', 'Gender'])["Value"]\
+                                                .agg(["median", "max", "min", "mean"]).reset_index()
+Age = Age.sort_values(by=['median'], ascending=False)
+
+Residence = dataset[dataset["Demographics Question"] == "Residence"]
+Residence = Residence.groupby(['Demographics Response', 'Gender'])["Value"]\
+                                                .agg(["median", "max", "min", "mean"]).reset_index()
+Residence = Residence.sort_values(by=['median'], ascending=False)
+
 layout = html.Div([
-        html.H4("Graphing Light/Dark Mode with BooleanSwitch"),
-        html.P("light | dark", style={"textAlign": "center"}),
-        dcc.Checklist(
-        id='x-axis',
-        options=['country', 'day'],
-        value=['time'],
-        inline=True),
-        dcc.Graph(id="pb-result")
-    ]
-)
+        dbc.Row(html.H4("Graphing Light/Dark Mode with BooleanSwitch")),
+        dbc.Row(
+            dcc.Checklist(
+                id='x-axis',
+                options=['country', 'day'],
+                value=['time'],
+                inline=True)),
+        dbc.Row([
+            dbc.Col(dcc.Graph(id="education_graph")),
+            dbc.Col(dcc.Graph(id="Marital status_graph")),
+        ], style={'width': '48%',
+                  'padding': '0px 10px 15px 10px',
+                  'marginLeft': 'auto',
+                  'marginRight': 'auto',
+                  'boxShadow': '0px 0px 5px 5px rgba(37,52,113,0.4)',
+                  'display': 'inline-block'}),
+        dbc.Row([
+            dbc.Col(dcc.Graph(id="Age_graph")),
+            dbc.Col(dcc.Graph(id="Residence_graph")),
+        ], style={'width': '48%',
+                  'high': '90%',
+                  'padding': '0px 10px 15px 10px',
+                  'marginLeft': 'auto',
+                  'marginRight': 'auto',
+                  'boxShadow': '0px 0px 5px 5px rgba(37,52,113,0.4)',
+                  'display': 'inline-block'}),
+        html.P(dcc.Link('Next Page', href='/Index')),
+        html.P(dcc.Link('Back Page', href='/Second')),
+        ], style={
+                  'padding': '0px 10px 15px 10px',
+                  'marginL,eft': 'auto',
+                  'marginRight': 'auto',
+                  'width': "150vh",
+                  'display': 'inline-block',
+                  'boxShadow': '0px 0px 5px 5px rgba(37,52,113,0.4)'
+                  }
+        )
+
 
 @app.callback(
-    Output("pb-result", "figure"),
+    Output("education_graph", "figure"),
     Input("x-axis", "value"),
 )
-def update_output(on):
+def update_education(on):
     fig = px.bar(Education, x='Demographics Response',
                  y='median',
                  color='Gender',
@@ -41,19 +85,132 @@ def update_output(on):
             'xanchor': 'center',
             'yanchor': 'top'},
         yaxis=dict(
-            title='% Expected Violence',
+            title='% Expected Violence (global Median)',
             titlefont_size=16,
             tickfont_size=14,
             color='crimson',),
 
-        xaxis = dict(
+        xaxis=dict(
             title='Education Level',
             titlefont_size=16,
             tickfont_size=14,
             color='crimson',
         ),
     )
+    fig.update_xaxes(tickangle=45,
+                     tickfont=dict(
+                         family='Rockwell',
+                         color='crimson',
+                         size=14))
+    fig.update_layout(barmode='group')
+    return fig
 
+
+@app.callback(
+    Output("Marital status_graph", "figure"),
+    Input("x-axis", "value"),
+)
+def update_marital(on):
+    fig = px.bar(Marital_status, x='Demographics Response',
+                 y='median',
+                 color='Gender',
+                 color_discrete_sequence=["pink", "blue"])
+    fig.update_layout(
+        title={
+            'text': "Marital_status impact on Man vs Woman Violence Expectation",
+            'y': 0.9,
+            'x': 0.5,
+            'xanchor': 'center',
+            'yanchor': 'top'},
+        yaxis=dict(
+            title='% Expected Violence (global Median)',
+            titlefont_size=16,
+            tickfont_size=14,
+            color='crimson',),
+
+        xaxis=dict(
+            title='Marital Status',
+            titlefont_size=16,
+            tickfont_size=14,
+            color='crimson',
+        ),
+    )
+    fig.update_xaxes(tickangle=45,
+                     tickfont=dict(
+                         family='Rockwell',
+                         color='crimson',
+                         size=14))
+    fig.update_layout(barmode='group')
+    return fig
+
+
+@app.callback(
+    Output("Residence_graph", "figure"),
+    Input("x-axis", "value"),
+)
+def update_Residence(on):
+    fig = px.bar(Residence, x='Demographics Response',
+                 y='median',
+                 color='Gender',
+                 color_discrete_sequence=["pink", "blue"])
+    fig.update_layout(
+        title={
+            'text': "Residence impact on Man vs Woman Violence Expectation",
+            'y': 0.9,
+            'x': 0.5,
+            'xanchor': 'center',
+            'yanchor': 'top'},
+        yaxis=dict(
+            title='% Expected Violence (global Median)',
+            titlefont_size=16,
+            tickfont_size=14,
+            color='crimson',),
+
+        xaxis=dict(
+            title='Residence Area',
+            titlefont_size=16,
+            tickfont_size=14,
+            color='crimson',
+        ),
+    )
+    fig.update_xaxes(tickangle=45,
+                     tickfont=dict(
+                         family='Rockwell',
+                         color='crimson',
+                         size=14))
+    fig.update_layout(barmode='group')
+    return fig
+
+
+@app.callback(
+    Output("Age_graph", "figure"),
+    Input("x-axis", "value"),
+)
+def update_age(on):
+    fig = px.bar(Age, x='Demographics Response',
+                 y='median',
+                 color='Gender',
+                 color_discrete_sequence=["pink", "blue"])
+    fig.update_layout(
+        title={
+            'text': "Age impact on Man vs Woman Violence Expectation",
+            'y': 0.9,
+            'x': 0.5,
+            'xanchor': 'center',
+            'yanchor': 'top'},
+        yaxis=dict(
+            title='% Expected Violence (global Median)',
+            titlefont_size=16,
+            tickfont_size=14,
+            color='crimson',),
+
+        xaxis=dict(
+            title='Age Range',
+            titlefont_size=16,
+            tickfont_size=14,
+            color='crimson',
+        ),
+    )
     fig.update_xaxes(tickangle=45,
                      tickfont=dict(
                          family='Rockwell',

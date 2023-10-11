@@ -1,8 +1,6 @@
-
-from dash import Dash, html, dcc, Input, Output
+from dash import html, dcc, Input, Output
 import plotly.express as px
 import pandas as pd
-import numpy as np
 
 from app import app
 
@@ -28,7 +26,10 @@ layout = html.Div([
         value='total_bill',
         inline=True
     ),
-    dcc.Graph(id="graph_question")], style={
+    dcc.Graph(id="graph_question"),
+    html.P(dcc.Link('Next Page', href='/Third')),
+    html.P(dcc.Link('Back Page', href='/First'))
+    ], style={
                   'padding': '0px 10px 15px 10px',
                   'marginLeft': 'auto',
                   'marginRight': 'auto',
@@ -62,5 +63,7 @@ def generate_question(x, y):
                                    size=10))
     return fig
 
+
 if __name__ == '__main__':
-    app.run_server(debug=True)
+
+    app.run_server(debug=False)

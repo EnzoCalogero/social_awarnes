@@ -1,8 +1,6 @@
-
-from dash import Dash, html, dcc, Input, Output
-import plotly.express as px
 import pandas as pd
-import numpy as np
+import plotly.express as px
+from dash import html, dcc, Input, Output
 
 from app import app
 
@@ -29,7 +27,7 @@ layout = html.Div([
     ),
     dcc.Graph(id="graph"),
     html.P(dcc.Link('Next Page', href='/Second')),
-    html.P(dcc.Link('Back Page', href='/'))], style={#'width': '40%',
+    html.P(dcc.Link('Back Page', href='/'))], style={
                   'padding': '0px 10px 15px 10px',
                   'marginL,eft': 'auto',
                   'marginRight': 'auto',
@@ -62,6 +60,7 @@ def generate_chart(x, y):
                                    color='crimson',
                                    size=10))
     return fig
+
 
 if __name__ == '__main__':
     app.run_server(debug=True)

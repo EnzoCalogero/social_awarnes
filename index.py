@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from dash import Dash, html, dcc, Input, Output
+from dash import html, dcc, Input, Output
 from app import app
 from apps import home, Full_Details, First_Overview, overview, second_Question, third_whithin_questions
 
@@ -9,9 +9,6 @@ colors = {
     'text': '#253471'
 }
 
-#############################################
-###  Starting the Layout                 ####
-##############################################
 app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
     html.Div(id='page-content'),
@@ -23,7 +20,6 @@ app.layout = html.Div([
     'color': colors['text']
 }
 )
-# End Layout
 
 
 @app.callback(Output('page-content', 'children'),
@@ -48,5 +44,5 @@ def display_page(pathname):
 
 
 if __name__ == '__main__':
-     app.run_server(port=8061, debug=True)
 
+    app.run_server(port=8061, debug=True)

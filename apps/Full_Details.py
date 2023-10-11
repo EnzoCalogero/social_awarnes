@@ -1,11 +1,10 @@
 
-from dash import Dash, html, dcc, Input, Output
+from dash import html, dcc, Input, Output
 import plotly.express as px
 import pandas as pd
 import numpy as np
 
 from app import app
-
 
 df_ = pd.read_csv("C:/gits_folders/social_awarnes/data/violence_data.csv")
 
@@ -15,9 +14,6 @@ demographic_questions_list = list(df_["Demographics Question"].unique())
 demographic_response_list = list(df_["Demographics Response"].unique())
 # /List questions
 
-###############
-##  Layout  ###
-###############
 layout = html.Div(children=[
     html.Div(children=[
         html.H1(children='How Violence on Woman is Tolerate?'),
@@ -43,9 +39,8 @@ layout = html.Div(children=[
               'boxShadow': '0px 0px 5px 5px rgba(37,52,113,0.4)'}),
 
     html.Div(children=[
-         #html.Div(children=''' What the Female Thinks.'''),
-         dcc.Graph(id='Female_Questions'),
-         ], style={#'width': '40%',
+          dcc.Graph(id='Female_Questions'),
+         ], style={
                    'padding': '0px 10px 15px 10px',
                    'marginLeft': 'auto',
                    'marginRight': 'auto',
@@ -57,7 +52,7 @@ layout = html.Div(children=[
 
     html.Div(children=[
          dcc.Graph(id='Male_Questions'),
-        ], style={#'width': '40%',
+        ], style={
                   'padding': '0px 10px 15px 10px',
                   'marginLeft': 'auto',
                   'marginRight': 'auto',
@@ -77,13 +72,12 @@ layout = html.Div(children=[
           'boxShadow': '0px 0px 5px 5px rgba(37,52,113,0.4)',
           'display': 'inline-block',
             }),
-    ], style={'font-family': 'Glacial Indifference', 'padding': '0px 10px 15px 10px',
-          'marginLeft': 'auto', 'marginRight': 'auto', "width": "160vh",
-          'boxShadow': '0px 0px 5px 5px rgba(37, 52, 113, 0.4)'})
-
-###################
-## Call Backs  ###
-##################
+    ], style={'font-family': 'Glacial Indifference',
+              'padding': '0px 10px 15px 10px',
+              'marginLeft': 'auto',
+              'marginRight': 'auto',
+              'width': '160vh',
+              'boxShadow': '0px 0px 5px 5px rgba(37, 52, 113, 0.4)'})
 
 
 @app.callback(
@@ -112,6 +106,7 @@ def update_figure(demographic_value, question_value):
     fig.update_layout(xaxis={'categoryorder': 'total descending'})
     fig.update_layout(showlegend=False, title="What the Female Thinks.")
     return fig
+
 
 @app.callback(
     Output('Male_Questions', 'figure'),
@@ -157,8 +152,6 @@ def update_figure(demographic_value, question_value):
     fig = px.bar(MF,
                  y="Delta",
                  x="Country",
-                 #color_discrete_sequence=['#bab0ac'],
-                 #color="Gender"
                  )
     fig.update_layout(xaxis={'categoryorder': 'total descending'})
     fig.update_layout(showlegend=False, title="What the Male vs Female Thinks. (Male % - Female%)")
