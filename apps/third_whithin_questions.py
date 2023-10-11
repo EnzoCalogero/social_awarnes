@@ -29,7 +29,7 @@ Residence = Residence.groupby(['Demographics Response', 'Gender'])["Value"]\
 Residence = Residence.sort_values(by=['median'], ascending=False)
 
 layout = html.Div([
-         dbc.Row(
+        dbc.Row(
             dcc.Checklist(
                 id='x-axis',
                 options=['country', 'day'],
