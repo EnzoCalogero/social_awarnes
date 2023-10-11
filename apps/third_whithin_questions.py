@@ -29,43 +29,41 @@ Residence = Residence.groupby(['Demographics Response', 'Gender'])["Value"]\
 Residence = Residence.sort_values(by=['median'], ascending=False)
 
 layout = html.Div([
-        dbc.Row(html.H4("Graphing Light/Dark Mode with BooleanSwitch")),
-        dbc.Row(
+         dbc.Row(
             dcc.Checklist(
                 id='x-axis',
                 options=['country', 'day'],
                 value=['time'],
                 inline=True)),
+
         dbc.Row([
-            dbc.Col(dcc.Graph(id="education_graph")),
-            dbc.Col(dcc.Graph(id="Marital status_graph")),
-        ], style={'width': '48%',
-                  'padding': '0px 10px 15px 10px',
-                  'marginLeft': 'auto',
+            dbc.Col(dcc.Graph(id="education_graph"), width=6),
+            dbc.Col(dcc.Graph(id="Residence_graph"), width=6),
+
+
+        ]),
+
+         dbc.Row([
+             dbc.Col(dcc.Graph(id="Age_graph"), width=6),
+             dbc.Col(dcc.Graph(id="Marital status_graph"), width=6),
+         ])
+    #, style={
+        #           'padding': '0px 10px 15px 10px',
+        #           'marginLeft': 'auto',
+        #           'marginRight': 'auto',
+        #           'width': "50%",
+        #           'display': 'inline-block',
+        #           'boxShadow': '0px 0px 5px 5px rgba(37,52,113,0.4)'
+        #           }),
+        # html.P(dcc.Link('Next Page', href='/Index')),
+        # html.P(dcc.Link('Back Page', href='/Second')),
+        ], style={'padding': '0px 10px 15px 10px',                  'marginL,eft': 'auto',
                   'marginRight': 'auto',
-                  'boxShadow': '0px 0px 5px 5px rgba(37,52,113,0.4)',
-                  'display': 'inline-block'}),
-        dbc.Row([
-            dbc.Col(dcc.Graph(id="Age_graph")),
-            dbc.Col(dcc.Graph(id="Residence_graph")),
-        ], style={'width': '48%',
-                  'high': '90%',
-                  'padding': '0px 10px 15px 10px',
-                  'marginLeft': 'auto',
-                  'marginRight': 'auto',
-                  'boxShadow': '0px 0px 5px 5px rgba(37,52,113,0.4)',
-                  'display': 'inline-block'}),
-        html.P(dcc.Link('Next Page', href='/Index')),
-        html.P(dcc.Link('Back Page', href='/Second')),
-        ], style={
-                  'padding': '0px 10px 15px 10px',
-                  'marginL,eft': 'auto',
-                  'marginRight': 'auto',
-                  'width': "150vh",
+                  'width': "140vh",
                   'display': 'inline-block',
                   'boxShadow': '0px 0px 5px 5px rgba(37,52,113,0.4)'
                   }
-        )
+         )
 
 
 @app.callback(
@@ -80,6 +78,7 @@ def update_education(on):
     fig.update_layout(
         title={
             'text': "Education impact on Man vs Woman Violence Expectation",
+
             'y': 0.9,
             'x': 0.5,
             'xanchor': 'center',
@@ -91,10 +90,10 @@ def update_education(on):
             color='crimson',),
 
         xaxis=dict(
-            title='Education Level',
-            titlefont_size=16,
-            tickfont_size=14,
-            color='crimson',
+            title='',
+            #titlefont_size=16,
+            #tickfont_size=14,
+            #color='crimson',
         ),
     )
     fig.update_xaxes(tickangle=45,
@@ -117,7 +116,7 @@ def update_marital(on):
                  color_discrete_sequence=["pink", "blue"])
     fig.update_layout(
         title={
-            'text': "Marital_status impact on Man vs Woman Violence Expectation",
+            'text': "Marital Status impact on Man vs Woman Violence Expectation",
             'y': 0.9,
             'x': 0.5,
             'xanchor': 'center',
@@ -129,10 +128,10 @@ def update_marital(on):
             color='crimson',),
 
         xaxis=dict(
-            title='Marital Status',
-            titlefont_size=16,
-            tickfont_size=14,
-            color='crimson',
+            title='',
+          #  titlefont_size=16,
+          #  tickfont_size=14,
+          #  color='crimson',
         ),
     )
     fig.update_xaxes(tickangle=45,
@@ -167,10 +166,10 @@ def update_Residence(on):
             color='crimson',),
 
         xaxis=dict(
-            title='Residence Area',
-            titlefont_size=16,
-            tickfont_size=14,
-            color='crimson',
+            title='',
+            #titlefont_size=16,
+            #tickfont_size=14,
+            #color='crimson',
         ),
     )
     fig.update_xaxes(tickangle=45,
@@ -199,16 +198,17 @@ def update_age(on):
             'xanchor': 'center',
             'yanchor': 'top'},
         yaxis=dict(
-            title='% Expected Violence (global Median)',
-            titlefont_size=16,
-            tickfont_size=14,
-            color='crimson',),
+            title='',
+           # titlefont_size=16,
+           # tickfont_size=14,
+           # color='crimson',
+            ),
 
         xaxis=dict(
-            title='Age Range',
-            titlefont_size=16,
-            tickfont_size=14,
-            color='crimson',
+            title='',
+            #titlefont_size=16,
+            #tickfont_size=14,
+            #color='crimson',
         ),
     )
     fig.update_xaxes(tickangle=45,
