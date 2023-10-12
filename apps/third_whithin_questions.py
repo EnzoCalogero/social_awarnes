@@ -47,17 +47,7 @@ layout = html.Div([
              dbc.Col(dcc.Graph(id="Age_graph"), width=6),
              dbc.Col(dcc.Graph(id="Marital status_graph"), width=6),
          ])
-    #, style={
-        #           'padding': '0px 10px 15px 10px',
-        #           'marginLeft': 'auto',
-        #           'marginRight': 'auto',
-        #           'width': "50%",
-        #           'display': 'inline-block',
-        #           'boxShadow': '0px 0px 5px 5px rgba(37,52,113,0.4)'
-        #           }),
-        # html.P(dcc.Link('Next Page', href='/Index')),
-        # html.P(dcc.Link('Back Page', href='/Second')),
-        ], style={'padding': '0px 10px 15px 10px',                  'marginL,eft': 'auto',
+         ], style={'padding': '0px 10px 15px 10px',                  'marginL,eft': 'auto',
                   'marginRight': 'auto',
                   'width': "140vh",
                   'display': 'inline-block',
