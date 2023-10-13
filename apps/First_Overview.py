@@ -1,6 +1,6 @@
 import dash_bootstrap_components as dbc
-import pandas as pd
 import numpy as np
+import pandas as pd
 import plotly.express as px
 from dash import html, dcc, Input, Output
 
@@ -30,19 +30,19 @@ layout = html.Div([
         dbc.Col([
             html.P("Countries Selection:"),
             dcc.Dropdown(
-                id='x-axis',
+                id='country_id',
                 options=country,
                 value='All Countries',
                 multi=True,
                 clearable=False,
-             )],
+            )],
             width={"size": 6, "offset": 3},
         )),
     dbc.Row(
         dbc.Col([
-    dcc.Graph(id="graph",
-              config=config)
-            ],  width={"size": 10, "offset": 1},
+            dcc.Graph(id="graph",
+                      config=config)
+        ], width={"size": 10, "offset": 1},
         )),
 
     dbc.Row(
@@ -65,9 +65,14 @@ layout = html.Div([
 
 @app.callback(
     Output("graph", "figure"),
-    Input("x-axis", "value"))
-def generate_chart(x):
-    fig = px.box(df_1,
+    Input("country_id", "value"))
+def generate_chart(country_dict):
+    if "All Countries" in country_dict:
+        df_1_ = df_1
+    else:
+        df_1_ = df_1[df_1.Country.isin(country_dict)]
+
+    fig = px.box(df_1_,
                  x="Country",
                  y="Value",
                  color="Gender",
@@ -75,14 +80,19 @@ def generate_chart(x):
                  )
     fig.update_layout(
         title={
-            'text': "For Each Country Man vs Woman Expectation",
-            'y': 0.9,
+            'text': "Man vs Woman Violence Expectation",
+ #           'y': 0.9,
             'x': 0.5,
             'xanchor': 'center',
-            'yanchor': 'top'})
+            'yanchor': 'top',
+    })
     fig.update_layout(
         xaxis=dict(
             title='',
+        )),
+    fig.update_layout(
+        yaxis=dict(
+            title='% Expected Violence',
         )),
     fig.update_xaxes(tickangle=45,
                      tickfont=dict(family='Rockwell',

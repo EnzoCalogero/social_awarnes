@@ -1,4 +1,5 @@
 from dash import html, dcc, Input, Output
+import dash_bootstrap_components as dbc
 import plotly.express as px
 import pandas as pd
 
@@ -8,10 +9,15 @@ df2 = pd.read_csv("C:/gits_folders/social_awarnes/data/violence_data.csv")
 df2 = df2[df2.Question !="... for at least one specific reason"]
 df2 = df2.sort_values(by=['Value'], ascending=False)
 
-# List questions
 layout = html.Div([
-    html.H4("Analysis of the restaurant's revenue"),
+    dbc.Row(
+        dbc.Col(
+    html.H4("For Each Question Man vs Woman Expectation"),
+            width={"size": 6, "offset": 3},
+        )),
 
+    dbc.Row(
+        dbc.Col([
     html.P("y-axis:"),
     dcc.Checklist(
         id='x-axis',
@@ -19,16 +25,26 @@ layout = html.Div([
         value=['time'],
         inline=True
     ),
-    html.P("y-axis:"),
-    dcc.RadioItems(
-        id='y-axis',
-        options=['total_bill', 'tip', 'size'],
-        value='total_bill',
-        inline=True
-    ),
+            ],
+            width={"size": 6, "offset": 3},
+        )),
+
+    dbc.Row(
+        dbc.Col(
     dcc.Graph(id="graph_question"),
+
+            width={"size": 10, "offset": 1},
+        )),
+
+    dbc.Row(
+        dbc.Col([
     html.P(dcc.Link('Next Page', href='/Third')),
     html.P(dcc.Link('Back Page', href='/First'))
+,
+            ],
+            width={"size": 6, "offset": 3},
+        )),
+
     ], style={
                   'padding': '0px 10px 15px 10px',
                   'marginLeft': 'auto',
@@ -41,9 +57,8 @@ layout = html.Div([
 
 @app.callback(
     Output("graph_question", "figure"),
-    Input("x-axis", "value"),
-    Input("y-axis", "value"))
-def generate_question(x, y):
+    Input("x-axis", "value"))
+def generate_question(x):
     fig = px.box(df2,
                  x="Question",
                  y="Value",
@@ -53,10 +68,18 @@ def generate_question(x, y):
     fig.update_layout(
         title={
             'text': "For Each Question Man vs Woman Expectation",
-            'y': 0.9,
+ #           'y': 0.9,
             'x': 0.5,
             'xanchor': 'center',
             'yanchor': 'top'})
+    fig.update_layout(
+        xaxis=dict(
+            title='',
+        )),
+    fig.update_layout(
+        yaxis=dict(
+            title='% Expected Violence',
+        )),
     fig.update_xaxes(tickangle=45,
                      tickfont=dict(family='Rockwell',
                                    color='crimson',
