@@ -2,9 +2,16 @@ from dash import html, dcc, Input, Output
 import dash_bootstrap_components as dbc
 
 import plotly.express as px
+import numpy as np
 import pandas as pd
 
 from app import app
+
+config = {
+    'displayModeBar': True,
+    'displaylogo': False,
+    'modeBarButtonsToRemove': ['zoom2d', 'hoverCompareCartesian', 'hoverClosestCartesian', 'toggleSpikelines']
+}
 
 dataset = pd.read_csv("C:/gits_folders/social_awarnes/data/violence_data.csv")
 
@@ -28,39 +35,53 @@ Residence = Residence.groupby(['Demographics Response', 'Gender'])["Value"]\
                                                 .agg(["median", "max", "min", "mean"]).reset_index()
 Residence = Residence.sort_values(by=['median'], ascending=False)
 
+country = dataset.sort_values(by=['Country'], ascending=True)
+country = country['Country'].unique()
+country = np.concatenate((country, ["All Countries"]))
+
+
 layout = html.Div([
-        dbc.Row(
-            dcc.Checklist(
-                id='x-axis',
-                options=['country', 'day'],
-                value=['time'],
-                inline=True)),
+    dbc.Row(
+        dbc.Col([
+            html.P("Countries Selection:"),
+            dcc.Dropdown(
+                id='country2_id',
+                options=country,
+                value='All Countries',
+                multi=True,
+                clearable=False,
+            )],
+            width={"size": 6, "offset": 3},
+            )),
 
-        dbc.Row([
-            dbc.Col(dcc.Graph(id="education_graph"), width=6),
-            dbc.Col(dcc.Graph(id="Residence_graph"), width=6),
+    dbc.Row([
+            dbc.Col(dcc.Graph(id="education_graph",
+                              config=config), width=6),
+            dbc.Col(dcc.Graph(id="Residence_graph",
+                              config=config), width=6),
+            ]),
 
-
-        ]),
-
-         dbc.Row([
-             dbc.Col(dcc.Graph(id="Age_graph"), width=6),
-             dbc.Col(dcc.Graph(id="Marital status_graph"), width=6),
-         ])
-         ], style={'padding': '0px 10px 15px 10px',                  'marginL,eft': 'auto',
-                  'marginRight': 'auto',
-                  'width': "140vh",
-                  'display': 'inline-block',
-                  'boxShadow': '0px 0px 5px 5px rgba(37,52,113,0.4)'
-                  }
+    dbc.Row([
+             dbc.Col(dcc.Graph(id="Age_graph",
+                               config=config), width=6),
+             dbc.Col(dcc.Graph(id="Marital status_graph",
+                               config=config), width=6),
+             ])
+         ], style={'padding': '0px 10px 15px 10px',
+                   'marginL,eft': 'auto',
+                   'marginRight': 'auto',
+                   'width': "140vh",
+                   'display': 'inline-block',
+                   'boxShadow': '0px 0px 5px 5px rgba(37,52,113,0.4)'
+                   }
          )
 
 
 @app.callback(
     Output("education_graph", "figure"),
-    Input("x-axis", "value"),
+    Input("country2_id", "value"),
 )
-def update_education(on):
+def update_education(country_):
     fig = px.bar(Education, x='Demographics Response',
                  y='median',
                  color='Gender',
@@ -81,9 +102,6 @@ def update_education(on):
 
         xaxis=dict(
             title='',
-            #titlefont_size=16,
-            #tickfont_size=14,
-            #color='crimson',
         ),
     )
     fig.update_xaxes(tickangle=45,
@@ -97,9 +115,9 @@ def update_education(on):
 
 @app.callback(
     Output("Marital status_graph", "figure"),
-    Input("x-axis", "value"),
+    Input("country2_id", "value"),
 )
-def update_marital(on):
+def update_marital(country_):
     fig = px.bar(Marital_status, x='Demographics Response',
                  y='median',
                  color='Gender',
@@ -119,9 +137,6 @@ def update_marital(on):
 
         xaxis=dict(
             title='',
-          #  titlefont_size=16,
-          #  tickfont_size=14,
-          #  color='crimson',
         ),
     )
     fig.update_xaxes(tickangle=45,
@@ -135,9 +150,9 @@ def update_marital(on):
 
 @app.callback(
     Output("Residence_graph", "figure"),
-    Input("x-axis", "value"),
+    Input("country2_id", "value"),
 )
-def update_Residence(on):
+def update_residence(country_):
     fig = px.bar(Residence, x='Demographics Response',
                  y='median',
                  color='Gender',
@@ -157,9 +172,6 @@ def update_Residence(on):
 
         xaxis=dict(
             title='',
-            #titlefont_size=16,
-            #tickfont_size=14,
-            #color='crimson',
         ),
     )
     fig.update_xaxes(tickangle=45,
@@ -173,9 +185,9 @@ def update_Residence(on):
 
 @app.callback(
     Output("Age_graph", "figure"),
-    Input("x-axis", "value"),
+    Input("country2_id", "value"),
 )
-def update_age(on):
+def update_age(country_):
     fig = px.bar(Age, x='Demographics Response',
                  y='median',
                  color='Gender',
@@ -189,17 +201,11 @@ def update_age(on):
             'yanchor': 'top'},
         yaxis=dict(
             title='',
-           # titlefont_size=16,
-           # tickfont_size=14,
-           # color='crimson',
             ),
 
         xaxis=dict(
             title='',
-            #titlefont_size=16,
-            #tickfont_size=14,
-            #color='crimson',
-        ),
+         ),
     )
     fig.update_xaxes(tickangle=45,
                      tickfont=dict(
