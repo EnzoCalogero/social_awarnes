@@ -66,7 +66,16 @@ layout = html.Div([
                                config=config), width=6),
              dbc.Col(dcc.Graph(id="Marital status_graph",
                                config=config), width=6),
-             ])
+             ]),
+    dbc.Row(
+        dbc.Col([
+            html.P(dcc.Link('Next Page', href='/Full_Details')),
+            html.P(dcc.Link('Back Page', href='/Second')),
+        ],
+            width={"size": 6, "offset": 3},
+        )),
+
+
          ], style={'padding': '0px 10px 15px 10px',
                    'marginL,eft': 'auto',
                    'marginRight': 'auto',
@@ -130,7 +139,7 @@ def update_marital(country_):
             'xanchor': 'center',
             'yanchor': 'top'},
         yaxis=dict(
-            title='% Expected Violence (global Median)',
+            title='',
             titlefont_size=16,
             tickfont_size=14,
             color='crimson',),
@@ -165,7 +174,7 @@ def update_residence(country_):
             'xanchor': 'center',
             'yanchor': 'top'},
         yaxis=dict(
-            title='% Expected Violence (global Median)',
+            title='',
             titlefont_size=16,
             tickfont_size=14,
             color='crimson',),
