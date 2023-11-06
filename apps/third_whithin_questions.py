@@ -42,17 +42,24 @@ country = np.concatenate((country, ["All Countries"]))
 
 layout = html.Div([
     dbc.Row(
-        dbc.Col([
-            html.P("Countries Selection:"),
+        dbc.Col(
+            html.H4("For Each Demographic the Violence  % Expectation"),
+            width={"size": 6, "offset": 2},
+        )),
+    dbc.Row([
+        dbc.Col(
+            html.H5("Countries Selection:"),
+            width={"size": 2, "offset": 4}
+        ),
+        dbc.Col(
             dcc.Dropdown(
                 id='country2_id',
                 options=country,
                 value='All Countries',
                 multi=True,
-                clearable=False,
-            )],
-            width={"size": 6, "offset": 3},
-            )),
+                clearable=False, ),
+            width={"size": 4, },)
+    ]),
 
     dbc.Row([
             dbc.Col(dcc.Graph(id="education_graph",
@@ -98,11 +105,11 @@ def update_education(country_):
     fig.update_layout(
         title={
             'text': "Education impact on Man vs Woman Violence Expectation",
-
             'y': 0.9,
             'x': 0.5,
             'xanchor': 'center',
             'yanchor': 'top'},
+        showlegend=False,
         yaxis=dict(
             title='% Expected Violence (global Median)',
             titlefont_size=16,
@@ -138,6 +145,7 @@ def update_marital(country_):
             'x': 0.5,
             'xanchor': 'center',
             'yanchor': 'top'},
+        showlegend=False,
         yaxis=dict(
             title='',
             titlefont_size=16,
@@ -178,7 +186,8 @@ def update_residence(country_):
             titlefont_size=16,
             tickfont_size=14,
             color='crimson',),
-
+        legend_title_text="gender of the surveyed",
+        showlegend=True,
         xaxis=dict(
             title='',
         ),
@@ -211,7 +220,7 @@ def update_age(country_):
         yaxis=dict(
             title='',
             ),
-
+        showlegend=False,
         xaxis=dict(
             title='',
          ),
